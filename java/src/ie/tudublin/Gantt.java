@@ -54,5 +54,31 @@ public class Gantt extends PApplet
 	public void draw()
 	{			
 		background(0);
+		displayTasks();
+	}
+
+	public void displayTasks(){
+		float border = width * 0.05f;
+
+		stroke(0, 0, 255);
+		textAlign(CENTER, CENTER);
+
+		for(int i = 1; i <= 30; i++){
+			float x = map(i, 1, 30, 150, 800 - border);
+			line(x, border, x, height - border);
+			text(i, x, border/2);
+		}
+
+		for(int i = 0; i < 9; i++){
+			float x = map(i, 0, 9, 100, 500);
+
+			Task myTask = new Task();
+			myTask = tasks.get(i);
+
+			
+
+			text(myTask.getTask(), border*2, x);
+		}
+
 	}
 }
