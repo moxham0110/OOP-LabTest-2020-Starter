@@ -49,7 +49,10 @@ public class Task {
             );
     }
     
-
+    public String toString()
+    {
+        return task + "\t" + start + "\t" + end;
+    }
     
 
 
