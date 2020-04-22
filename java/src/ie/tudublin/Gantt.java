@@ -12,7 +12,7 @@ public class Gantt extends PApplet
 	ArrayList<Task> tasks = new ArrayList<Task>();
 
 	//global variables
-	float border = width * 0.05f;
+	float barHeight = 30;
 	
 	public void settings()
 	{
@@ -41,11 +41,47 @@ public class Gantt extends PApplet
 	
 	public void mousePressed()
 	{
-
+		checkForObject();
 		
 			
 	}
 
+	public int checkForObject(){
+
+		//iterate through ArrayList
+		for (int i = 0; i < 9; i++) {
+
+            Task t = tasks.get(i);
+
+            //must be between two y coordinates
+            float y1 = map(i, 0, 9, 100, 500);
+            float y2 = y1;
+
+
+            //must be between two x coordinates
+            float x1 = map(t.getStart(), 1, 30, 145, 800);
+			float x2 = map(t.getEnd(), 1, 30, 145, 800);
+            
+            // calculating the y axis ie this is used to
+            // allign the rectangles with the writing
+           
+            
+            if(mouseX >= x1 && mouseX <= x2 
+            && mouseY >= y1   && mouseY <= y2){
+                println("clicked");
+                return i;
+            }
+
+    
+
+		}
+		
+		return 0;
+        
+	}
+
+
+	
 
 
 	public void mouseDragged()
@@ -67,16 +103,17 @@ public class Gantt extends PApplet
 		displayTasks();
 	}
 
+
 	public void displayTasks(){
 		
-		float gap;
+		float border = width * 0.05f;
 
 		fill(255);
 		stroke(0, 0, 255);
 		textAlign(CENTER, CENTER);
 
 		for(int i = 1; i <= 30; i++){
-			float x = map(i, 1, 30, gap, height - border);
+			float x = map(i, 1, 30, 150, width - border);
 			line(x, border, x, height - border);
 			text(i, x, border/2);
 		}
@@ -106,7 +143,8 @@ public class Gantt extends PApplet
 			float l = map(i, 0, 9, 0, 250);
 			fill(l, 300, 300);
 
-			rect(j, x - 10, k-j, 30);
+			//x1, y1, end length - start = width, height 
+			rect(j, x - 10, k-j, barHeight);
 			
 			
 		}

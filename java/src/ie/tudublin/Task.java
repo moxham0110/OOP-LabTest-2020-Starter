@@ -12,19 +12,19 @@ public class Task {
     public String getTask() {
 		return task;
 	}
-	public void setTask(String task) {
+	public void setTask(final String task) {
 		this.task = task;
 	}
 	public int getStart() {
 		return start;
 	}
-	public void setStart(int start) {
+	public void setStart(final int start) {
 		this.start = start;
 	}
 	public int getEnd() {
 		return end;
 	}
-	public void setEnd(int end) {
+	public void setEnd(final int end) {
 		this.end = end;
     }
     
@@ -33,14 +33,14 @@ public class Task {
         this("", 0, 0);
     }
 
-    public Task(String task, int start, int end)
+    public Task(final String task, final int start, final int end)
     {
         this.task = task;
         this.start = start;
         this.end = end;
     }
 
-    public Task(TableRow tr)
+    public Task(final TableRow tr)
     {
         this(
             tr.getString("Task"),
