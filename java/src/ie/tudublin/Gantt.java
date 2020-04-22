@@ -13,6 +13,7 @@ public class Gantt extends PApplet
 
 	//global variables
 	float barHeight = 30;
+	int flag;
 	
 	public void settings()
 	{
@@ -41,12 +42,15 @@ public class Gantt extends PApplet
 	
 	public void mousePressed()
 	{
-		checkForObject();
+		flag = checkForObject();
 		
-			
 	}
 
+	
+
 	public int checkForObject(){
+
+		float border = width * 0.05f;
 
 		//iterate through ArrayList
 		for (int i = 0; i < 9; i++) {
@@ -54,30 +58,30 @@ public class Gantt extends PApplet
             Task t = tasks.get(i);
 
             //must be between two y coordinates
-            float y1 = map(i, 0, 9, 100, 500);
-            float y2 = y1;
+			float m = map(i, 0, 9, 100, 500);
+			float y1 = m - 10;
+            float y2 = y1 + barHeight;
 
 
-            //must be between two x coordinates
-            float x1 = map(t.getStart(), 1, 30, 145, 800);
-			float x2 = map(t.getEnd(), 1, 30, 145, 800);
+			//must be between two x coordinates
+			//start
+			float x1 = map(t.getStart(), 1, 30, 150, width - border);
+			//end
+			float x2 = map(t.getEnd(), 1, 30, 150, width);
+			
+			//print(x1 + x2 + y1 + y2);
+
+			//returns task index
+			if(mouseX > x1 && mouseX < x2
+				&& mouseY > y1 && mouseY < y2)
+			{
+				return i;
+			}
             
-            // calculating the y axis ie this is used to
-            // allign the rectangles with the writing
-           
-            
-            if(mouseX >= x1 && mouseX <= x2 
-            && mouseY >= y1   && mouseY <= y2){
-                println("clicked");
-                return i;
-            }
-
-    
-
 		}
+		return -1;
+	
 		
-		return 0;
-        
 	}
 
 
@@ -86,7 +90,22 @@ public class Gantt extends PApplet
 
 	public void mouseDragged()
 	{
+		if(flag != -1){
+			Task t = tasks.get(flag);
+			
+			if(mouseX < 400){
+				if(t.getStart() > 1 && t.getEnd() < 30){
+					t.setEnd(t.getEnd()+1);	
+				}
+			}
+			if(mouseX > 400){
+				if(t.getStart() > 1 && t.getEnd() < 30){
+					t.setEnd(t.getEnd()-1);	
+				}
+			}
+		}
 		
+
 	}
 
 	
