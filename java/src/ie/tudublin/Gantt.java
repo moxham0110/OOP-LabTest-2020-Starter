@@ -8,13 +8,18 @@ import processing.data.TableRow;
 
 public class Gantt extends PApplet
 {	
+	//ArrayList
 	ArrayList<Task> tasks = new ArrayList<Task>();
+
+	//global variables
+	float border = width * 0.05f;
 	
 	public void settings()
 	{
 		size(800, 600);
 	}
 
+	//load tasks
 	public void loadTasks()
 	{
 		Table t = loadTable("tasks.csv", "header");
@@ -25,6 +30,7 @@ public class Gantt extends PApplet
 		}
 	}
 
+	//print tasks
 	public void printTasks()
 	{
 		for(Task tk:tasks)
@@ -35,12 +41,16 @@ public class Gantt extends PApplet
 	
 	public void mousePressed()
 	{
-		println("Mouse pressed");	
+
+		
+			
 	}
+
+
 
 	public void mouseDragged()
 	{
-		println("Mouse dragged");
+		
 	}
 
 	
@@ -58,38 +68,45 @@ public class Gantt extends PApplet
 	}
 
 	public void displayTasks(){
-		float border = width * 0.05f;
+		
+		float gap;
 
 		fill(255);
 		stroke(0, 0, 255);
 		textAlign(CENTER, CENTER);
 
 		for(int i = 1; i <= 30; i++){
-			float x = map(i, 1, 30, 150, 800 - border);
+			float x = map(i, 1, 30, gap, height - border);
 			line(x, border, x, height - border);
 			text(i, x, border/2);
 		}
 
-		for(int i = 0; i < 9; i++){
+		for(int i = 0; i < tasks.size(); i++){
 			
+			//styling
 			colorMode(RGB);
 			fill(255);
 			stroke(255);
 			
+			//new Task object to iterate through ArrayList
 			Task myTask = new Task();
 			myTask = tasks.get(i);
 
+			//tasks on left 
 			float x = map(i, 0, 9, 100, 500);
 			text(myTask.getTask(), border*2, x);
 
-
+			//map start and end values out
 			float j = map(myTask.getStart(), 1, 30, 150, width - border);
 			float k = map(myTask.getEnd(), 1, 30, 150, width - border);
 			
+			//styling for bars
+			noStroke();
 			colorMode(HSB);
 			float l = map(i, 0, 9, 0, 250);
 			fill(l, 300, 300);
-			rect(j, x - 10, k-j, 25);
+
+			rect(j, x - 10, k-j, 30);
 			
 			
 		}
