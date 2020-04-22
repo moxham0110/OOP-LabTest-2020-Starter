@@ -70,14 +70,20 @@ public class Gantt extends PApplet
 		}
 
 		for(int i = 0; i < 9; i++){
-			float x = map(i, 0, 9, 100, 500);
-
+			
 			Task myTask = new Task();
 			myTask = tasks.get(i);
 
-			
-
+			float x = map(i, 0, 9, 100, 500);
 			text(myTask.getTask(), border*2, x);
+
+
+			float j = map(myTask.getStart(), 1, 30, 150, width - border);
+			float k = map(myTask.getEnd(), 1, 30, 150, width - border);
+			
+			rect(j, x - 10, k-j, 25);
+			
+			
 		}
 
 	}
